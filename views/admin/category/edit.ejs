@@ -9,13 +9,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="bold">Tambah Kategori</h1>
+            <h1 class="bold">Ubah Kategori</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
               <li class="breadcrumb-item active"><a href="/category">Kategori</a></li>
-              <li class="breadcrumb-item active">Tambah</li>
+              <li class="breadcrumb-item active">Ubah</li>
             </ol>
           </div>
         </div>
@@ -32,17 +32,16 @@
             <div class="card card-primary">
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="/category/create" method="POST">
+              <form action="/category/edit/<%= category._id %>?_method=PUT" method="POST">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="category">Nama Kategori</label>
-                    <input type="text" id="category" class="form-control" placeholder="Masukkan kategori" name="name">
+                    <input type="text" id="category" class="form-control" placeholder="Masukkan nama kategori" name="name" value="<%= category.name %>">
                   </div>
                 </div>
                 <!-- /.card-body -->
-
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Ubah</button>
                 </div>
               </form>
             </div>

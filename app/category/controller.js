@@ -1,4 +1,5 @@
 const Category = require("./model");
+const { ObjectId } = require("mongodb");
 
 module.exports = {
   index: async (req, res) => {
@@ -21,7 +22,6 @@ module.exports = {
       const { name } = req.body;
       let category = await Category({ name });
       await category.save();
-
       res.redirect("/category");
     } catch {
       console.log(error.message);
@@ -29,8 +29,19 @@ module.exports = {
   },
   viewEdit: async (req, res) => {
     try {
-      const { id } = req.body;
-      res.render("admin/category/edit");
+      const { id } = req.params;
+      let category = await Category.findOne({ _id: id });
+      res.render("admin/category/edit", { category });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  actionEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { name } = req.body;
+      let category = await Category.findOneAndUpdate({ _id: id }, { name });
+      res.redirect("/category");
     } catch (error) {
       console.log(error);
     }
