@@ -3,7 +3,8 @@ const Category = require("./model");
 module.exports = {
   index: async (req, res) => {
     try {
-      res.render("admin/category/view_category");
+      const category = await Category.find();
+      res.render("admin/category/view_category", { category });
     } catch (error) {
       console.log(error.message);
     }
@@ -24,6 +25,14 @@ module.exports = {
       res.redirect("/category");
     } catch {
       console.log(error.message);
+    }
+  },
+  viewEdit: async (req, res) => {
+    try {
+      const { id } = req.body;
+      res.render("admin/category/edit");
+    } catch (error) {
+      console.log(error);
     }
   },
 };
