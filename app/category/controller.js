@@ -1,5 +1,4 @@
 const Category = require("./model");
-const { ObjectId } = require("mongodb");
 
 module.exports = {
   index: async (req, res) => {
@@ -40,7 +39,16 @@ module.exports = {
     try {
       const { id } = req.params;
       const { name } = req.body;
-      let category = await Category.findOneAndUpdate({ _id: id }, { name });
+      let category = await Category.findOneAndRemove({ _id: id }, { name });
+      res.redirect("/category");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let category = await Category.deleteOne({ _id: id });
       res.redirect("/category");
     } catch (error) {
       console.log(error);
