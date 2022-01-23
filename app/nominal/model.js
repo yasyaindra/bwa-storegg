@@ -11,7 +11,6 @@ let nominalSchema = mongoose.Schema({
   },
   price: {
     type: Number,
-    default: 0,
   },
 });
 

@@ -3,17 +3,18 @@
       <thead>
       <tr>
         <th>No</th>
-        <th>Nama</th>
-        <th>Aksi</th>
+        <th>Nama Koin</th>
+        <th>Jumlah Koin</th>
+        <th>Harga Koin</th>
       </tr>
       </thead>
       <tbody>
         <% console.log(nominal) %>
         <% for(let i = 0; i < nominal.length; i++) { %>
           <tr>
-            <td><%= i + 2 %> </td>
-            <td><%= nominal[i].coinQuantity %> </td>
+            <td><%= i + 1 %> </td>
             <td><%= nominal[i].coinName %> </td>
+            <td><%= nominal[i].coinQuantity %> </td>
             <td><%= nominal[i].price %> </td>
             <td>
               <form action="/nominal/delete/<%= nominal[i].id %>?_method=DELETE" method="POST">
