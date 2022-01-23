@@ -51,4 +51,36 @@ module.exports = {
       res.redirect("/nominal");
     }
   },
+  actionEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { price, coinName, coinQuantity } = req.body;
+      let category = await Nominal.findOneAndUpdate(
+        { _id: id },
+        { price, coinName, coinQuantity }
+      );
+      req.flash("alertMessage", "Berhasil edit nominal");
+      req.flash("alertStatus", "warning");
+      res.redirect("/nominal");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+    }
+  },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let category = await Nominal.deleteOne({ _id: id });
+
+      req.flash("alertMessage", "Berhasil hapus nominal");
+      req.flash("alertStatus", "danger");
+
+      res.redirect("/nominal");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+    }
+  },
 };
