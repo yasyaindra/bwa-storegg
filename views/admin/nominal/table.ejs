@@ -1,0 +1,28 @@
+<div class="card-body">
+    <table id="example2" class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Aksi</th>
+      </tr>
+      </thead>
+      <tbody>
+        <% console.log(nominalData) %>
+        <% for(let i = 0; i < nominalData.length; i++) { %>
+          <tr>
+            <td><%= i + 2 %> </td>
+            <td><%= nominalData[i].coinQuantity %> </td>
+            <td><%= nominalData[i].coinName %> </td>
+            <td><%= nominalData[i].price %> </td>
+            <td>
+              <form action="/nominal/delete/<%= nominalData[i].id %>?_method=DELETE" method="POST">
+                <a href="/nominal/edit/<%= nominalData[i]._id %>" class="btn btn-warning">Ubah</a>
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+            </td>
+          </tr>
+        <% } %> 
+      </tbody>
+    </table>
+  </div>
