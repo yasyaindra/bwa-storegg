@@ -8,16 +8,16 @@
       </tr>
       </thead>
       <tbody>
-        <% console.log(nominalData) %>
-        <% for(let i = 0; i < nominalData.length; i++) { %>
+        <% console.log(nominal) %>
+        <% for(let i = 0; i < nominal.length; i++) { %>
           <tr>
             <td><%= i + 2 %> </td>
-            <td><%= nominalData[i].coinQuantity %> </td>
-            <td><%= nominalData[i].coinName %> </td>
-            <td><%= nominalData[i].price %> </td>
+            <td><%= nominal[i].coinQuantity %> </td>
+            <td><%= nominal[i].coinName %> </td>
+            <td><%= nominal[i].price %> </td>
             <td>
-              <form action="/nominal/delete/<%= nominalData[i].id %>?_method=DELETE" method="POST">
-                <a href="/nominal/edit/<%= nominalData[i]._id %>" class="btn btn-warning">Ubah</a>
+              <form action="/nominal/delete/<%= nominal[i].id %>?_method=DELETE" method="POST">
+                <a href="/nominal/edit/<%= nominal[i]._id %>" class="btn btn-warning">Ubah</a>
                 <button type="submit" class="btn btn-danger">Hapus</button>
               </form>
             </td>

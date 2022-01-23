@@ -7,10 +7,10 @@ module.exports = {
     const alert = { message: alertMessage, status: alertStatus };
     try {
       const nominal = await Nominal.find();
-      const nominalData = [
-        { id: 1, coinName: "Diamonds", coinQuantity: 12, price: 12000 },
-      ];
-      res.render("admin/nominal/view_nominal", { nominalData, alert });
+      // const nominalData = [
+      //   { id: 1, coinName: "Diamonds", coinQuantity: 12, price: 12000 },
+      // ];
+      res.render("admin/nominal/view_nominal", { nominal, alert });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -20,6 +20,20 @@ module.exports = {
   viewCreate: async (req, res) => {
     try {
       res.render("admin/nominal/create");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/nominal");
+    }
+  },
+  actionCreate: async (req, res) => {
+    try {
+      const { coin, coinName, coinQuantity } = req.body;
+      const nominal = await Nominal({ coin, coinName, coinQuantity });
+      await nominal.save();
+      req.flash("alertMessage", "Berhasil tambah nominal");
+      req.flash("alertStatus", "success");
+      res.redirect("/nominal");
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
