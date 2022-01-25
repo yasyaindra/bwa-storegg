@@ -1,0 +1,29 @@
+<div class="card-body">
+    <table id="example2" class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama Koin</th>
+        <th>Jumlah Koin</th>
+        <th>Harga Koin</th>
+      </tr>
+      </thead>
+      <tbody>
+        <% console.log(voucher) %>
+        <% for(let i = 0; i < voucher.length; i++) { %>
+          <tr>
+            <td><%= i + 1 %> </td>
+            <td><%= voucher[i].name %> </td>
+            <td><%= voucher[i].jurusan %> </td>
+            <td><%= voucher[i].umur %> </td>
+            <td>
+              <form action="/voucher/delete/<%= voucher[i]._id %>?_method=DELETE" method="POST">
+                <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-warning">Ubah</a>
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+            </td>
+          </tr>
+        <% } %> 
+      </tbody>
+    </table>
+  </div>
