@@ -47,12 +47,18 @@
                     <input type="text" id="category" class="form-control" placeholder="" name="name">
                   </div>
                   <div class="form-group">
-                    <label for="category">Category</label>
-                    <input type="text" id="category" class="form-control" placeholder="" name="name">
+                    <label for="exampleSelectBorder">Kategori</label>
+                    <select class="custom-select form-control-border" id="kategory" name="coinName">
+                      <% categories.forEach((category) => { %>
+                      <option value="<%= category._id %>"><%= category.name %></option>
+                      <% }) %>
+                    </select>
                   </div>
                   <div class="form-group">
-                    <label for="category">Nominals</label>
-                    <input type="text" id="category" class="form-control" placeholder="" name="name">
+                    <label>Multiple</label>
+                    <select class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
+                      <option>Alabama</option>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label for="category">User</label>

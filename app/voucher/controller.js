@@ -1,4 +1,6 @@
 const Voucher = require("./model");
+const Category = require("../category/model");
+const Nominal = require("../nominal/model");
 
 module.exports = {
   index: async (req, res) => {
@@ -14,7 +16,9 @@ module.exports = {
   },
   viewCreate: async (req, res) => {
     try {
-      res.render("admin/voucher/create");
+      const categories = await Category.find();
+      const nominals = await Nominal.find();
+      res.render("admin/voucher/create", { categories, nominals });
     } catch (error) {
       console.log(error);
     }
