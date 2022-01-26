@@ -6,6 +6,7 @@
         <th>Nama Koin</th>
         <th>Jumlah Koin</th>
         <th>Harga Koin</th>
+        <th>Thumbnail</th>
       </tr>
       </thead>
       <tbody>
@@ -14,8 +15,9 @@
           <tr>
             <td><%= i + 1 %> </td>
             <td><%= voucher[i].name %> </td>
-            <td><%= voucher[i].jurusan %> </td>
-            <td><%= voucher[i].umur %> </td>
+            <td><%= voucher[i].category %> </td>
+            <td><%= voucher[i].nominals %> </td>
+            <td><img src="/uploads/<%= voucher[i].thumbnail %>" alt="" width="100px" height="100px"></td>
             <td>
               <form action="/voucher/delete/<%= voucher[i]._id %>?_method=DELETE" method="POST">
                 <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-warning">Ubah</a>

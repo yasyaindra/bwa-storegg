@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="bold">Tambah Nominal</h1>
+            <h1 class="bold">Tambah Voucher</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -39,8 +39,8 @@
                     <input type="text" id="namaGame" class="form-control" placeholder="Masukkan nama game" name="name">
                   </div>
                   <div class="form-group">
-                    <label for="exampleSelectBorder">Kategori</label>
-                    <select class="custom-select form-control-border" id="kategory" name="coinName">
+                    <label for="category">Kategori</label>
+                    <select class="custom-select form-control-border" id="category" name="category">
                       <% categories.forEach((category) => { %>
                       <option value="<%= category._id %>"><%= category.name %></option>
                       <% }) %>
@@ -49,7 +49,7 @@
                   <div class="form-group">
                     <label></label>
                     <div class="select2-blue">
-                      <select class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-blue" style="width: 100%;">
+                      <select class="select2" multiple="multiple" data-placeholder="Pilih nominal" data-dropdown-css-class="select2-blue" style="width: 100%;" name="nominals">
                         <% nominals.forEach(nominal => { %>
                           <option value="<%= nominal._id %>"><%= nominal.coinName %></option>
                         <% }) %>
