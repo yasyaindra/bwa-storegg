@@ -11,12 +11,14 @@ module.exports = {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
-      // const voucher = [
-      //   { name: "Indra", jurusan: "Teknik Informatika", umur: 21 },
-      // ];
-      const voucher = await Voucher.find();
+      const voucher = await Voucher.find()
+        .populate("category")
+        .populate("nominals");
+      console.log(voucher);
       res.render("admin/voucher/view_voucher", { voucher, alert });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   },
   viewCreate: async (req, res) => {
     try {
@@ -52,16 +54,18 @@ module.exports = {
               nominals,
               thumbnail: filename,
             });
-
+            console.log(voucher);
             await voucher.save();
             req.flash("alertMessage", "Berhasil tambah voucher");
             req.flash("alertStatus", "success");
+
+            console.log(voucher);
 
             res.redirect("/voucher");
           } catch (error) {
             req.flash("alertMessage", `${error.message}`);
             req.flash("alertStatus", "danger");
-            res.redirect("/category");
+            res.redirect("/voucher");
           }
         });
       } else {
