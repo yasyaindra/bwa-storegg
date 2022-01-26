@@ -32,19 +32,11 @@
             <div class="card card-primary">
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="/category/create" method="POST">
+              <form action="/voucher/create" method="POST" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="category">Nama Nominal</label>
-                    <input type="text" id="category" class="form-control" placeholder="Masukkan kategori" name="name">
-                  </div>
-                  <div class="form-group">
-                    <label for="category">Status</label>
-                    <input type="text" id="category" class="form-control" placeholder="" name="name">
-                  </div>
-                  <div class="form-group">
-                    <label for="category">Thumbnail</label>
-                    <input type="text" id="category" class="form-control" placeholder="" name="name">
+                    <label for="namaGame">Nama Game</label>
+                    <input type="text" id="namaGame" class="form-control" placeholder="Masukkan nama game" name="name">
                   </div>
                   <div class="form-group">
                     <label for="exampleSelectBorder">Kategori</label>
@@ -55,7 +47,7 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>Multiple (.select2-purple)</label>
+                    <label></label>
                     <div class="select2-blue">
                       <select class="select2" multiple="multiple" data-placeholder="Select a State" data-dropdown-css-class="select2-blue" style="width: 100%;">
                         <% nominals.forEach(nominal => { %>
@@ -65,8 +57,9 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="category">User</label>
-                    <input type="text" id="category" class="form-control" placeholder="" name="name">
+                    <label for="image" class="form-label">Post Image</label>
+                    <img class="img-preview img-fluid mb-3 col-sm-2" alt="">
+                    <input type="file" class="form-control" id="image" name="image" onchange="previewImage()">
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -94,3 +87,19 @@
 
 <%- include ../../partials/footer.ejs %>
 <%- include ../../partials/js.ejs %>
+
+<script>
+  function previewImage(){
+    const image = document.querySelector("#image");
+    const imgPreview = document.querySelector(".img-preview")
+
+    imgPreview.style.display = 'block';
+
+    const oFReader = new FileReader();
+
+    oFReader.readAsDataURL(image.files[0]);
+    oFReader.onload = function(oFREvent){
+      imgPreview.src = oFREvent.target.result
+    }
+  }
+</script>
