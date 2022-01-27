@@ -117,7 +117,7 @@ module.exports = {
         src.on("end", async () => {
           try {
             const voucher = await Voucher.findOne({ _id: id });
-            let currentImage = `${config.rootPart}/public/uploads/${voucher.thumbnail}`;
+            let currentImage = `${config.rootPath}/public/uploads/${voucher.thumbnail}`;
             if (fs.existsSync(currentImage)) {
               fs.unlinkSync(currentImage);
             }
@@ -160,6 +160,25 @@ module.exports = {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       res.redirect("/category");
+    }
+  },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let voucher = await Voucher.findOneAndRemove({ _id: id });
+
+      let currentImage = `${config.rootPath}/public/uploads/${voucher.thumbnail}`;
+      if (fs.existsSync(currentImage)) {
+        fs.unlinkSync(currentImage);
+      }
+      req.flash("alertMessage", "Berhasil hapus nominal");
+      req.flash("alertStatus", "danger");
+
+      res.redirect("/voucher");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/voucher");
     }
   },
 };
