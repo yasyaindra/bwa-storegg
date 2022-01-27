@@ -81,4 +81,19 @@ module.exports = {
       res.redirect("/category");
     }
   },
+  viewEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let categories = await Category.find();
+      let nominals = await Nominal.find();
+      let voucher = await Voucher.findOne({ _id: id })
+        .populate("category")
+        .populate("nominals");
+      res.render("admin/voucher/edit", { voucher, categories, nominals });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/voucher");
+    }
+  },
 };
