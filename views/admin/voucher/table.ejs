@@ -18,9 +18,9 @@
             <td><%= voucher[i].name %> </td>
             <td><%= voucher[i].category.name %></td>
             <td>
-              <% voucher[i].nominals.forEach(nominal => {  %>
-                <span class="badge badge-warning"> <%= nominal.coinName %> <%= nominal.price %> </span>
-              <% }) %>
+                  <% voucher[i].nominals.forEach(nominal => {  %>
+                    <span class="badge badge-warning"> <%= nominal.coinName %> <%= nominal.price %> </span>
+                  <% }) %>
             </td>
             <td> <% if(voucher[i].status === "Y") { %>
                 <span class="badge badge-success">Aktif</span>
