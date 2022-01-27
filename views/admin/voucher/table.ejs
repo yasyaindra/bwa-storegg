@@ -3,9 +3,10 @@
       <thead>
       <tr>
         <th>No</th>
-        <th>Nama Koin</th>
-        <th>Jumlah Koin</th>
+        <th>Nama Game</th>
+        <th>Kategori</th>
         <th>Harga Koin</th>
+        <th>Status</th>
         <th>Thumbnail</th>
       </tr>
       </thead>
@@ -16,9 +17,25 @@
             <td><%= i + 1 %> </td>
             <td><%= voucher[i].name %> </td>
             <td><%= voucher[i].category.name %></td>
+            <td>
+              <% voucher[i].nominals.forEach(nominal => {  %>
+                <span class="badge badge-warning"> <%= nominal.coinName %> <%= nominal.price %> </span>
+              <% }) %>
+            </td>
+            <td> <% if(voucher[i].status === "Y") { %>
+                <span class="badge badge-success">Aktif</span>
+                <% }else { %>
+                  <span class="badge badge-danger">Nonaktif</span>    
+            <% } %>
+            </td>
             <td><img src="/uploads/<%= voucher[i].thumbnail %>" alt="" width="100px" height="100px"></td>
             <td>
               <form action="/voucher/delete/<%= voucher[i]._id %>?_method=DELETE" method="POST">
+                <% if(voucher[i].status == "N") { %> 
+                  <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-success">Nyalakan</a>
+                  <% }else{ %>
+                    <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-danger">Matikan</a>
+                <% } %> 
                 <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-warning">Ubah</a>
                 <button type="submit" class="btn btn-danger">Hapus</button>
               </form>
