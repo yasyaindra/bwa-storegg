@@ -30,12 +30,19 @@
             </td>
             <td><img src="/uploads/<%= voucher[i].thumbnail %>" alt="" width="100px" height="100px"></td>
             <td>
-              <form action="/voucher/delete/<%= voucher[i]._id %>?_method=DELETE" method="POST">
-                <% if(voucher[i].status == "N") { %> 
-                  <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-success">Nyalakan</a>
+              <form action="/voucher/status/<%= voucher[i]._id %>?_method=PUT" method="POST" style="display:inline-block;">
+                <% if(voucher[i].status === "Y") { %>
+                <button class="btn btn-danger btn-sm">
+                  <i class="fas fa-folder"></i>
+                  Matikan
                   <% }else{ %>
-                    <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-danger">Matikan</a>
-                <% } %> 
+                    <button class="btn btn-success btn-sm">
+                    <i class="fas fa-folder"></i>
+                      Nyalakan
+                      <% } %> 
+                </button>
+              </form>
+              <form action="/voucher/delete/<%= voucher[i]._id %>?_method=DELETE" method="POST">
                 <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-warning">Ubah</a>
                 <button type="submit" class="btn btn-danger">Hapus</button>
               </form>

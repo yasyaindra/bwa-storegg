@@ -7,6 +7,7 @@ const {
   viewEdit,
   actionEdit,
   actionDelete,
+  actionStatus,
 } = require("./controller");
 const multer = require("multer");
 const os = require("os");
@@ -26,5 +27,6 @@ router.post(
   multer({ dest: os.tmpdir() }).single("image"),
   actionCreate
 );
+router.put("/status/:id", actionStatus);
 
 module.exports = router;
