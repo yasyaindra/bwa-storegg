@@ -53,25 +53,25 @@ module.exports = {
       res.redirect("/payment");
     }
   },
-  //   actionEdit: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       const { name, nameBank, noRekening } = req.body;
-  //       let bank = await Bank.findOneAndUpdate(
-  //         { _id: id },
-  //         { name, nameBank, noRekening }
-  //       );
+  actionEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { type, banks } = req.body;
+      let payment = await Payment.findOneAndUpdate(
+        { _id: id },
+        { type, banks }
+      );
 
-  //       req.flash("alertMessage", "Berhasil edit bank");
-  //       req.flash("alertStatus", "warning");
-
-  //       res.redirect("/bank");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/bank");
-  //     }
-  //   },
+      req.flash("alertMessage", "Berhasil edit payment");
+      req.flash("alertStatus", "warning");
+      console.log(payment);
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/payment");
+    }
+  },
   //   actionDelete: async (req, res) => {
   //     try {
   //       const { id } = req.params;
