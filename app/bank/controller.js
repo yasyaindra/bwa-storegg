@@ -39,46 +39,49 @@ module.exports = {
       res.redirect("/bank");
     }
   },
-  // viewEdit: async (req, res) => {
-  //   try {
-  //     const { id } = req.params;
-  //     let category = await Category.findOne({ _id: id });
-  //     res.render("admin/category/edit", { category });
-  //   } catch (error) {
-  //     req.flash("alertMessage", `${error.message}`);
-  //     req.flash("alertStatus", "danger");
-  //     res.redirect("/category");
-  //   }
-  // },
-  //   actionEdit: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       const { name } = req.body;
-  //       let category = await Category.findOneAndUpdate({ _id: id }, { name });
+  viewEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let bank = await Bank.findOne({ _id: id });
+      res.render("admin/bank/edit", { bank });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/bank");
+    }
+  },
+  actionEdit: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { name, nameBank, noRekening } = req.body;
+      let bank = await Bank.findOneAndUpdate(
+        { _id: id },
+        { name, nameBank, noRekening }
+      );
 
-  //       req.flash("alertMessage", "Berhasil edit category");
-  //       req.flash("alertStatus", "warning");
+      req.flash("alertMessage", "Berhasil edit bank");
+      req.flash("alertStatus", "warning");
 
-  //       res.redirect("/category");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/category");
-  //     }
-  //   },
-  //   actionDelete: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       let category = await Category.deleteOne({ _id: id });
+      res.redirect("/bank");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/bank");
+    }
+  },
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let bank = await Bank.deleteOne({ _id: id });
 
-  //       req.flash("alertMessage", "Berhasil hapus category");
-  //       req.flash("alertStatus", "danger");
+      req.flash("alertMessage", "Berhasil hapus bank");
+      req.flash("alertStatus", "danger");
 
-  //       res.redirect("/category");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/category");
-  //     }
-  //   },
+      res.redirect("/bank");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/bank");
+    }
+  },
 };
