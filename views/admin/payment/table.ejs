@@ -1,0 +1,50 @@
+<div class="card-body">
+    <table id="example2" class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>No</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Banks</th>
+        <th>Aksi</th>
+      </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < payment.length; i++) { %>
+          <tr>
+            <td><%= i + 2 %> </td>
+            <td><%= payment[i].type %> </td>
+            <td> <% if(payment[i].status === "Y") { %>
+              <span class="badge badge-success">Aktif</span>
+              <% }else { %>
+                <span class="badge badge-danger">Nonaktif</span>    
+          <% } %>
+          </td>
+            <td>
+              <% payment[i].banks.forEach(bank => {  %>
+                <span class="badge badge-warning"> <%= bank.name %> <%= bank.nameBank %> </span>
+              <% }) %>
+        </td>
+            <td>
+              <form action="/payment/status/<%= payment[i]._id %>?_method=PUT" method="POST" style="display:inline-block;">
+                <% if(payment[i].status === "Y") { %>
+                <button class="btn btn-danger btn-sm">
+                  <i class="fas fa-folder"></i>
+                  Matikan
+                  <% }else{ %>
+                    <button class="btn btn-success btn-sm">
+                    <i class="fas fa-folder"></i>
+                      Nyalakan
+                      <% } %> 
+                </button>
+              </form>
+              <form action="/payment/delete/<%= payment[i].id %>?_method=DELETE" method="POST">
+                <a href="/payment/edit/<%= payment[i]._id %>" class="btn btn-warning">Ubah</a>
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+            </td>
+          </tr>
+        <% } %> 
+      </tbody>
+    </table>
+  </div>
