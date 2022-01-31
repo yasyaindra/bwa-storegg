@@ -1,8 +1,9 @@
 var express = require("express");
 var router = express.Router();
-const { viewUser } = require("./controller");
+const { viewSignIn, actionSignIn } = require("./controller");
 
 /* GET home page. */
-router.get("/", viewUser);
+router.get("/", viewSignIn);
+router.post("/", actionSignIn);
 
 module.exports = router;
