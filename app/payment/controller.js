@@ -72,19 +72,32 @@ module.exports = {
       res.redirect("/payment");
     }
   },
-  //   actionDelete: async (req, res) => {
-  //     try {
-  //       const { id } = req.params;
-  //       let bank = await Bank.deleteOne({ _id: id });
+  actionDelete: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let payment = await Payment.deleteOne({ _id: id });
 
-  //       req.flash("alertMessage", "Berhasil hapus bank");
-  //       req.flash("alertStatus", "danger");
+      req.flash("alertMessage", "Berhasil hapus payment");
+      req.flash("alertStatus", "danger");
 
-  //       res.redirect("/bank");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", "danger");
-  //       res.redirect("/bank");
-  //     }
-  //   },
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/payment");
+    }
+  },
+  actionStatus: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let payment = await Payment.findOne({ _id: id });
+      let status = payment.status === "Y" ? "N" : "Y";
+      payment = await Payment.findOneAndUpdate({ _id: id }, { status });
+      req.flash("alertMessage", "Berhasil ubah status");
+      req.flash("alertStatus", "success");
+      res.redirect("/payment");
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
