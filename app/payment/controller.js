@@ -8,7 +8,12 @@ module.exports = {
     const alert = { message: alertMessage, status: alertStatus };
     try {
       const payment = await Payment.find().populate("banks");
-      res.render("admin/payment/view_payment", { payment, alert });
+      res.render("admin/payment/view_payment", {
+        payment,
+        alert,
+        title: "Halaman Payment",
+        name: req.session.user.name,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -18,7 +23,11 @@ module.exports = {
   viewCreate: async (req, res) => {
     try {
       const banks = await Bank.find();
-      res.render("admin/payment/create", { banks });
+      res.render("admin/payment/create", {
+        banks,
+        title: "Halaman Payment",
+        name: req.session.user.name,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -46,7 +55,12 @@ module.exports = {
       const { id } = req.params;
       let banks = await Bank.find();
       let payment = await Payment.findOne({ _id: id }).populate("banks");
-      res.render("admin/payment/edit", { payment, banks });
+      res.render("admin/payment/edit", {
+        payment,
+        banks,
+        title: "Halaman Payment",
+        name: req.session.user.name,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");

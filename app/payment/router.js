@@ -9,6 +9,10 @@ const {
   actionDelete,
   actionStatus,
 } = require("./controller");
+const { isLoginAdmin } = require("../middleware/auth");
+
+/* GET home page. */
+router.use(isLoginAdmin);
 
 /* GET home page. */
 router.get("/", index);

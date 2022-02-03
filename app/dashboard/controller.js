@@ -2,7 +2,8 @@ module.exports = {
   index: async (req, res) => {
     try {
       res.render("index", {
-        title: "Welcome",
+        name: req.session.user.name,
+        title: "Halaman Dashboard",
       });
     } catch (error) {
       console.log(error.message);

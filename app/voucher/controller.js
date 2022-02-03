@@ -15,7 +15,12 @@ module.exports = {
         .populate("category")
         .populate("nominals");
       console.log(voucher);
-      res.render("admin/voucher/view_voucher", { voucher, alert });
+      res.render("admin/voucher/view_voucher", {
+        voucher,
+        alert,
+        title: "Halaman Voucher",
+        name: req.session.user.name,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -24,7 +29,12 @@ module.exports = {
     try {
       const categories = await Category.find();
       const nominals = await Nominal.find();
-      res.render("admin/voucher/create", { categories, nominals });
+      res.render("admin/voucher/create", {
+        categories,
+        nominals,
+        title: "Halaman Voucher",
+        name: req.session.user.name,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +99,13 @@ module.exports = {
       let voucher = await Voucher.findOne({ _id: id })
         .populate("category")
         .populate("nominals");
-      res.render("admin/voucher/edit", { voucher, categories, nominals });
+      res.render("admin/voucher/edit", {
+        voucher,
+        categories,
+        nominals,
+        title: "Halaman VOucher",
+        name: req.session.user.name,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
