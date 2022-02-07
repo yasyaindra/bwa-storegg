@@ -15,9 +15,11 @@ var bankRouter = require("./app/bank/router");
 var paymentRouter = require("./app/payment/router");
 var userRouter = require("./app/user/router");
 var transactionRouter = require("./app/transaction/router");
+var playerRouter = require("./app/player/router");
 
 var app = express();
-
+var URL = "/api/v1";
+// 4:45 https://class.buildwithangga.com/course_playing/full-stack-javascript-developer-2021-website-top-up-voucher-game/98
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -50,6 +52,9 @@ app.use("/voucher", voucherRouter);
 app.use("/bank", bankRouter);
 app.use("/payment", paymentRouter);
 app.use("/transaction", transactionRouter);
+
+//api
+app.use(`${URL}/players`, playerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
