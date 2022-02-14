@@ -5,6 +5,9 @@ const Bank = require("../bank/model");
 const Voucher = require("../voucher/model");
 const Category = require("../category/model");
 const Transaction = require("../transaction/model");
+const path = require("path");
+const fs = require("fs");
+const config = require("../../config");
 
 module.exports = {
   landingPage: async (req, res) => {
@@ -180,9 +183,131 @@ module.exports = {
       if (!history)
         return res.status(404).json({ message: "Transaction is not found!" });
 
-      res.status(201).json({ data: history });
+      res.status(200).json({ data: history });
     } catch (error) {
-      res.send(404).json({ message: "Internal error" });
+      res.send(404).json({ message: "Internal error" || error.message });
+    }
+  },
+  dashboard: async (req, res) => {
+    try {
+      const counts = await Transaction.aggregate([
+        { $match: { player: req.player._id } },
+        { $group: { _id: "$category", value: { $sum: "$value" } } },
+      ]);
+
+      const categories = await Category.find();
+
+      categories.forEach((category) => {
+        counts.forEach((count) => {
+          if (count._id.toString() === category._id.toString()) {
+            count.name = category.name;
+          }
+        });
+      });
+
+      const history = await Transaction.find({ player: req.player._id })
+        .populate("category")
+        .sort({ updatedAt: -1 });
+
+      res.status(200).json({ count: counts, data: history });
+    } catch (error) {}
+  },
+  profile: async (req, res) => {
+    try {
+      const player = {
+        id: req.player._id,
+        username: req.player.username,
+        email: req.player.email,
+        name: req.player.name,
+        avatar: req.player.avatar,
+        phoneNumber: req.player.phoneNumber,
+      };
+
+      res.status(200).json({ data: player });
+    } catch (error) {
+      res.status(500).json({ message: "Internal error" || error.message });
+    }
+  },
+  editProfile: async (req, res, next) => {
+    try {
+      const { name = "", phoneNumber = "" } = req.body;
+      console.log(req);
+
+      const payload = {};
+
+      if (name.length) payload.name = name;
+      if (phoneNumber.length) payload.phoneNumber = phoneNumber;
+      if (req.file) {
+        let tmp_path = req.file.path;
+        let originalExt =
+          req.file.originalname.split(".")[
+            req.file.originalname.split(".").length - 1
+          ];
+        let filename = `${req.file.filename}.${originalExt}`;
+        let target_path = path.resolve(
+          config.rootPath,
+          `public/uploads/${filename}`
+        );
+        const src = fs.createReadStream(tmp_path);
+        const dest = fs.createWriteStream(target_path);
+        src.pipe(dest);
+        src.on("end", async () => {
+          let player = await Player.findOne({ _id: req.player._id });
+          let currentImage = `${config.rootPath}/public/uploads/${player.avatar}`;
+          if (fs.existsSync(currentImage)) {
+            fs.unlinkSync(currentImage);
+          }
+
+          player = await Player.findOneAndUpdate(
+            {
+              _id: req.player._id,
+            },
+            {
+              ...payload,
+              avatar: filename,
+            },
+            { new: true, runValidators: true }
+          );
+
+          console.log(player);
+          res.status(201).json({
+            data: {
+              id: player.id,
+              name: player.name,
+              phoneNumber: player.phoneNumber,
+              avatar: player.avatar,
+            },
+          });
+        });
+        src.on("err", async () => {
+          next(err);
+        });
+      } else {
+        const player = await Player.findOneAndUpdate(
+          { _id: req.player._id },
+          payload,
+          { new: true, runValidators: true }
+        );
+        res.status(201).json({
+          data: {
+            id: player.id,
+            name: player.name,
+            phoneNumber: player.phoneNumber,
+            avatar: player.avatar,
+          },
+        });
+      }
+      console.log("===========");
+      console.log(player);
+      res.status(201).json({ data: player });
+    } catch (err) {
+      if (err && err.name === "ValidationError") {
+        res.status(422).json({
+          error: 1,
+          message: err.message,
+          fields: err.errors,
+        });
+      }
     }
   },
 };
