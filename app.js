@@ -6,6 +6,7 @@ var logger = require("morgan");
 var methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
+const cors = require("cors");
 
 var dashboardRouter = require("./app/dashboard/router");
 var categoryRouter = require("./app/category/router");
@@ -20,6 +21,7 @@ var authRouter = require("./app/auth/router");
 
 var app = express();
 var URL = "/api/v1";
+app.use(cors);
 // 4:45 https://class.buildwithangga.com/course_playing/full-stack-javascript-developer-2021-website-top-up-voucher-game/98
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
