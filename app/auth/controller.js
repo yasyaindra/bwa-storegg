@@ -60,7 +60,7 @@ module.exports = {
   },
   signin: async (req, res, next) => {
     const { email, password } = req.body;
-
+    console.log(req.body);
     Player.findOne({ email: email })
       .then((player) => {
         if (player) {
